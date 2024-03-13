@@ -7,18 +7,25 @@ import (
 	"testing"
 
 	"github.com/jackc/pgx/v5"
+	"github.com/losuch/fc-order/util"
 )
 
 var testConn *pgx.Conn
 var testQueries *Queries
 
 func TestMain(m *testing.M) {
-    config, err := pgx.ParseConfig("postgresql://root:secret@localhost:5432/filip-club?sslmode=disable")
+    
+    config, err := util.LoadConfig("../..")
+    if err != nil {
+        log.Fatal("cannot load config:", err)
+    }
+
+    dbCconfig, err := pgx.ParseConfig(config.DBSource)
     if err != nil {
         log.Fatal("unable to parse config:", err)
     }
 
-    testConn, err = pgx.ConnectConfig(context.Background(), config)
+    testConn, err = pgx.ConnectConfig(context.Background(), dbCconfig)
     if err != nil {
         log.Fatal("unable to connect to database:", err)
     }
