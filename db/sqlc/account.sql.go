@@ -14,13 +14,13 @@ INSERT INTO account (email, hashed_password, role) VALUES ($1, $2, $3) RETURNING
 `
 
 type CreateAccountParams struct {
-	Email          string
-	HashedPassword string
-	Role           string
+	Email          string `json:"email"`
+	HashedPassword string `json:"hashed_password"`
+	Role           string `json:"role"`
 }
 
 func (q *Queries) CreateAccount(ctx context.Context, arg CreateAccountParams) (Account, error) {
-	row := q.db.QueryRow(ctx, createAccount, arg.Email, arg.HashedPassword, arg.Role)
+	row := q.db.QueryRowContext(ctx, createAccount, arg.Email, arg.HashedPassword, arg.Role)
 	var i Account
 	err := row.Scan(
 		&i.AccountID,
@@ -37,7 +37,7 @@ DELETE FROM account WHERE account_id = $1
 `
 
 func (q *Queries) DeleteAccount(ctx context.Context, accountID int64) error {
-	_, err := q.db.Exec(ctx, deleteAccount, accountID)
+	_, err := q.db.ExecContext(ctx, deleteAccount, accountID)
 	return err
 }
 
@@ -46,7 +46,7 @@ SELECT account_id, email, hashed_password, role, created_at FROM account WHERE a
 `
 
 func (q *Queries) GetAccount(ctx context.Context, accountID int64) (Account, error) {
-	row := q.db.QueryRow(ctx, getAccount, accountID)
+	row := q.db.QueryRowContext(ctx, getAccount, accountID)
 	var i Account
 	err := row.Scan(
 		&i.AccountID,
@@ -63,7 +63,7 @@ SELECT account_id, email, hashed_password, role, created_at FROM account WHERE e
 `
 
 func (q *Queries) GetAccountByEmail(ctx context.Context, email string) (Account, error) {
-	row := q.db.QueryRow(ctx, getAccountByEmail, email)
+	row := q.db.QueryRowContext(ctx, getAccountByEmail, email)
 	var i Account
 	err := row.Scan(
 		&i.AccountID,
@@ -80,12 +80,12 @@ SELECT account_id, email, hashed_password, role, created_at FROM account
 `
 
 func (q *Queries) GetAccountList(ctx context.Context) ([]Account, error) {
-	rows, err := q.db.Query(ctx, getAccountList)
+	rows, err := q.db.QueryContext(ctx, getAccountList)
 	if err != nil {
 		return nil, err
 	}
 	defer rows.Close()
-	var items []Account
+	items := []Account{}
 	for rows.Next() {
 		var i Account
 		if err := rows.Scan(
@@ -99,6 +99,9 @@ func (q *Queries) GetAccountList(ctx context.Context) ([]Account, error) {
 		}
 		items = append(items, i)
 	}
+	if err := rows.Close(); err != nil {
+		return nil, err
+	}
 	if err := rows.Err(); err != nil {
 		return nil, err
 	}
@@ -110,13 +113,13 @@ UPDATE account SET hashed_password = $1, role = $2 WHERE account_id = $3 RETURNI
 `
 
 type UpdateAccountParams struct {
-	HashedPassword string
-	Role           string
-	AccountID      int64
+	HashedPassword string `json:"hashed_password"`
+	Role           string `json:"role"`
+	AccountID      int64  `json:"account_id"`
 }
 
 func (q *Queries) UpdateAccount(ctx context.Context, arg UpdateAccountParams) (Account, error) {
-	row := q.db.QueryRow(ctx, updateAccount, arg.HashedPassword, arg.Role, arg.AccountID)
+	row := q.db.QueryRowContext(ctx, updateAccount, arg.HashedPassword, arg.Role, arg.AccountID)
 	var i Account
 	err := row.Scan(
 		&i.AccountID,

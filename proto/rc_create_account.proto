@@ -1,0 +1,17 @@
+syntax = "proto3";
+
+package pb;
+
+option go_package = "github.com/losuch/fc-order/pb";
+
+import "account.proto";
+
+message CreateAccountRequest {
+    string email = 1;
+    string password = 2;
+    string role = 3;
+}
+
+message CreateAccountResponse {
+    Account account = 1;
+}

@@ -1,0 +1,14 @@
+syntax = "proto3";
+
+package pb;
+
+option go_package = "github.com/losuch/fc-order/pb";
+
+import "google/protobuf/timestamp.proto";
+
+message Account {
+    int64 acccount_id = 1;
+    string email = 2;
+    string role = 3;
+    google.protobuf.Timestamp created_at = 4;
+}

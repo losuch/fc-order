@@ -5,13 +5,13 @@
 package db
 
 import (
-	"github.com/jackc/pgx/v5/pgtype"
+	"database/sql"
 )
 
 type Account struct {
-	AccountID      int64
-	Email          string
-	HashedPassword string
-	Role           string
-	CreatedAt      pgtype.Timestamp
+	AccountID      int64        `json:"account_id"`
+	Email          string       `json:"email"`
+	HashedPassword string       `json:"hashed_password"`
+	Role           string       `json:"role"`
+	CreatedAt      sql.NullTime `json:"created_at"`
 }
