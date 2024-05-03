@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package pb;
 
-import "rc_create_account.proto";
+import "rpc_create_account.proto";
 
 option go_package = "github.com/losuch/fc-order/pb";
 
