@@ -23,6 +23,25 @@ service FcOrder {
             get: "/api/v1/accounts"
         };
     }
+
+    rpc GetAccount(GetAccountRequest) returns (Account) {
+        option (google.api.http) = {
+            get: "/api/v1/accounts/{id}"
+        };
+    }
+
+    rpc UpdateAccount(UpdateAccountRequest) returns (Account) {
+        option (google.api.http) = {
+            put: "/api/v1/accounts/{id}"
+            body: "*"
+        };
+    }
+
+    rpc DeleteAccount(DeleteAccountRequest) returns (DeleteAccountResponse) {
+        option (google.api.http) = {
+            delete: "/api/v1/accounts/{id}"
+        };
+    }
     
     rpc Check(HealthCheckRequest) returns (HealthCheckResponse) {
         option (google.api.http) = {

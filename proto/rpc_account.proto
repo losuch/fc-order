@@ -17,3 +17,21 @@ message GetAccountListRequest {}
 message GetAccountListResponse {
     repeated Account accounts = 1;
 }
+
+message GetAccountRequest {
+    int64 id = 1;
+}
+
+message UpdateAccountRequest {
+    int64 id = 1;
+    string password = 2;
+    string role = 3;
+}
+
+message DeleteAccountRequest {
+    int64 id = 1;
+}
+
+message DeleteAccountResponse {
+    string status = 1;
+}

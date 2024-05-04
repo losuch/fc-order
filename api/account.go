@@ -59,3 +59,52 @@ func (server *Server) GetAccountList(ctx context.Context, req *pb.GetAccountList
 		Accounts: pbAccounts,
 	}, nil
 }
+
+// GetAccount returns an account by id
+func (server *Server) GetAccount(ctx context.Context, req *pb.GetAccountRequest) (*pb.Account, error) {
+	
+	account, err := server.store.GetAccount(ctx, req.Id)
+	if err != nil {
+		return nil, status.Errorf(codes.Internal, "Internal error: %v", err)
+	}
+	
+	return &pb.Account{
+		AccountId: account.AccountID,
+		Email: account.Email,
+		Role: account.Role,
+		CreatedAt: timestamppb.New(account.CreatedAt.Time),
+	}, nil
+}
+
+// UpdateAccount updates an account
+func (server *Server) UpdateAccount(ctx context.Context, req *pb.UpdateAccountRequest) (*pb.Account, error) {
+	
+	arg := db.UpdateAccountParams{
+		HashedPassword: req.Password,
+		AccountID: req.Id,
+		Role: req.Role,
+	}
+	
+	account, err := server.store.UpdateAccount(ctx, arg)
+	if err != nil {
+		return nil, status.Errorf(codes.Internal, "Internal error: %v", err)
+	}
+	
+	return &pb.Account{
+		AccountId: account.AccountID,
+		Email: account.Email,
+		Role: account.Role,
+		CreatedAt: timestamppb.New(account.CreatedAt.Time),
+	}, nil
+}
+
+// DeleteAccount deletes an account
+func (server *Server) DeleteAccount(ctx context.Context, req *pb.DeleteAccountRequest) (*pb.DeleteAccountResponse, error) {
+	
+	err := server.store.DeleteAccount(ctx, req.Id)
+	if err != nil {
+		return nil, status.Errorf(codes.Internal, "Internal error: %v", err)
+	}
+	
+	return &pb.DeleteAccountResponse{Status: "OK"}, nil
+}
