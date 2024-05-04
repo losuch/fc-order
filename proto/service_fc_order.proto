@@ -3,9 +3,11 @@ syntax = "proto3";
 package pb;
 
 import "rpc_create_account.proto";
+import "rpc_health.proto";
 
 option go_package = "github.com/losuch/fc-order/pb";
 
 service FcOrder {
     rpc CreateAccount(CreateAccountRequest) returns (CreateAccountResponse) {}
+    rpc Check(HealthCheckRequest) returns (HealthCheckResponse) {}
 }

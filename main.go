@@ -26,6 +26,11 @@ func main() {
 		log.Fatal("cannot connect to db:", err)
 	}
 
+	err = conn.Ping()
+    if err != nil {
+        log.Fatal("cannot ping db:", err)
+    }
+
 	store := db.NewStore(conn)
 	runGrpcServer(config, store)
 }

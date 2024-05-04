@@ -1,0 +1,11 @@
+syntax = "proto3";
+
+package pb;
+
+option go_package = "github.com/losuch/fc-order/pb";
+
+message HealthCheckRequest {}
+
+message HealthCheckResponse {
+    string status = 1;
+}

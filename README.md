@@ -26,3 +26,9 @@ Database schema design: https://dbdiagram.io/
 ### SQLC
 
 SQLC is a code generation tool for writing SQL queries in Go. It is designed to replace many of the "ORM" style libraries and provide a much simpler and more performant interface to your database of choice. The sqlc.yaml contains the configuration for the sqlc tool.
+
+### gRPC
+
+Use the evans tool to interact with the gRPC server.
+
+`$ evans -r repl --host localhost --port 9090`

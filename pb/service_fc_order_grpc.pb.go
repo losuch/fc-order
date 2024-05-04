@@ -20,6 +20,7 @@ const _ = grpc.SupportPackageIsVersion7
 
 const (
 	FcOrder_CreateAccount_FullMethodName = "/pb.FcOrder/CreateAccount"
+	FcOrder_Check_FullMethodName         = "/pb.FcOrder/Check"
 )
 
 // FcOrderClient is the client API for FcOrder service.
@@ -27,6 +28,7 @@ const (
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type FcOrderClient interface {
 	CreateAccount(ctx context.Context, in *CreateAccountRequest, opts ...grpc.CallOption) (*CreateAccountResponse, error)
+	Check(ctx context.Context, in *HealthCheckRequest, opts ...grpc.CallOption) (*HealthCheckResponse, error)
 }
 
 type fcOrderClient struct {
@@ -46,11 +48,21 @@ func (c *fcOrderClient) CreateAccount(ctx context.Context, in *CreateAccountRequ
 	return out, nil
 }
 
+func (c *fcOrderClient) Check(ctx context.Context, in *HealthCheckRequest, opts ...grpc.CallOption) (*HealthCheckResponse, error) {
+	out := new(HealthCheckResponse)
+	err := c.cc.Invoke(ctx, FcOrder_Check_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // FcOrderServer is the server API for FcOrder service.
 // All implementations must embed UnimplementedFcOrderServer
 // for forward compatibility
 type FcOrderServer interface {
 	CreateAccount(context.Context, *CreateAccountRequest) (*CreateAccountResponse, error)
+	Check(context.Context, *HealthCheckRequest) (*HealthCheckResponse, error)
 	mustEmbedUnimplementedFcOrderServer()
 }
 
@@ -60,6 +72,9 @@ type UnimplementedFcOrderServer struct {
 
 func (UnimplementedFcOrderServer) CreateAccount(context.Context, *CreateAccountRequest) (*CreateAccountResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateAccount not implemented")
+}
+func (UnimplementedFcOrderServer) Check(context.Context, *HealthCheckRequest) (*HealthCheckResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Check not implemented")
 }
 func (UnimplementedFcOrderServer) mustEmbedUnimplementedFcOrderServer() {}
 
@@ -92,6 +107,24 @@ func _FcOrder_CreateAccount_Handler(srv interface{}, ctx context.Context, dec fu
 	return interceptor(ctx, in, info, handler)
 }
 
+func _FcOrder_Check_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(HealthCheckRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(FcOrderServer).Check(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: FcOrder_Check_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(FcOrderServer).Check(ctx, req.(*HealthCheckRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // FcOrder_ServiceDesc is the grpc.ServiceDesc for FcOrder service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -102,6 +135,10 @@ var FcOrder_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "CreateAccount",
 			Handler:    _FcOrder_CreateAccount_Handler,
+		},
+		{
+			MethodName: "Check",
+			Handler:    _FcOrder_Check_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
