@@ -4,10 +4,20 @@ package pb;
 
 import "rpc_create_account.proto";
 import "rpc_health.proto";
+import "google/api/annotations.proto";
 
 option go_package = "github.com/losuch/fc-order/pb";
 
 service FcOrder {
-    rpc CreateAccount(CreateAccountRequest) returns (CreateAccountResponse) {}
-    rpc Check(HealthCheckRequest) returns (HealthCheckResponse) {}
+    rpc CreateAccount(CreateAccountRequest) returns (CreateAccountResponse) {
+        option (google.api.http) = {
+            post: "/api/v1/create_account"
+            body: "*"
+        };
+    }
+    rpc Check(HealthCheckRequest) returns (HealthCheckResponse) {
+        option (google.api.http) = {
+            get: "/health"
+        };
+    }
 }

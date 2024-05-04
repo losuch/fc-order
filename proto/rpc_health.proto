@@ -4,8 +4,11 @@ package pb;
 
 option go_package = "github.com/losuch/fc-order/pb";
 
+import "google/protobuf/timestamp.proto";
+
 message HealthCheckRequest {}
 
 message HealthCheckResponse {
     string status = 1;
+    google.protobuf.Timestamp timestamp = 2;
 }
