@@ -19,15 +19,17 @@ import (
 const _ = grpc.SupportPackageIsVersion7
 
 const (
-	FcOrder_CreateAccount_FullMethodName = "/pb.FcOrder/CreateAccount"
-	FcOrder_Check_FullMethodName         = "/pb.FcOrder/Check"
+	FcOrder_CreateAccount_FullMethodName  = "/pb.FcOrder/CreateAccount"
+	FcOrder_GetAccountList_FullMethodName = "/pb.FcOrder/GetAccountList"
+	FcOrder_Check_FullMethodName          = "/pb.FcOrder/Check"
 )
 
 // FcOrderClient is the client API for FcOrder service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type FcOrderClient interface {
-	CreateAccount(ctx context.Context, in *CreateAccountRequest, opts ...grpc.CallOption) (*CreateAccountResponse, error)
+	CreateAccount(ctx context.Context, in *CreateAccountRequest, opts ...grpc.CallOption) (*Account, error)
+	GetAccountList(ctx context.Context, in *GetAccountListRequest, opts ...grpc.CallOption) (*GetAccountListResponse, error)
 	Check(ctx context.Context, in *HealthCheckRequest, opts ...grpc.CallOption) (*HealthCheckResponse, error)
 }
 
@@ -39,9 +41,18 @@ func NewFcOrderClient(cc grpc.ClientConnInterface) FcOrderClient {
 	return &fcOrderClient{cc}
 }
 
-func (c *fcOrderClient) CreateAccount(ctx context.Context, in *CreateAccountRequest, opts ...grpc.CallOption) (*CreateAccountResponse, error) {
-	out := new(CreateAccountResponse)
+func (c *fcOrderClient) CreateAccount(ctx context.Context, in *CreateAccountRequest, opts ...grpc.CallOption) (*Account, error) {
+	out := new(Account)
 	err := c.cc.Invoke(ctx, FcOrder_CreateAccount_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *fcOrderClient) GetAccountList(ctx context.Context, in *GetAccountListRequest, opts ...grpc.CallOption) (*GetAccountListResponse, error) {
+	out := new(GetAccountListResponse)
+	err := c.cc.Invoke(ctx, FcOrder_GetAccountList_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -61,7 +72,8 @@ func (c *fcOrderClient) Check(ctx context.Context, in *HealthCheckRequest, opts 
 // All implementations must embed UnimplementedFcOrderServer
 // for forward compatibility
 type FcOrderServer interface {
-	CreateAccount(context.Context, *CreateAccountRequest) (*CreateAccountResponse, error)
+	CreateAccount(context.Context, *CreateAccountRequest) (*Account, error)
+	GetAccountList(context.Context, *GetAccountListRequest) (*GetAccountListResponse, error)
 	Check(context.Context, *HealthCheckRequest) (*HealthCheckResponse, error)
 	mustEmbedUnimplementedFcOrderServer()
 }
@@ -70,8 +82,11 @@ type FcOrderServer interface {
 type UnimplementedFcOrderServer struct {
 }
 
-func (UnimplementedFcOrderServer) CreateAccount(context.Context, *CreateAccountRequest) (*CreateAccountResponse, error) {
+func (UnimplementedFcOrderServer) CreateAccount(context.Context, *CreateAccountRequest) (*Account, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateAccount not implemented")
+}
+func (UnimplementedFcOrderServer) GetAccountList(context.Context, *GetAccountListRequest) (*GetAccountListResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetAccountList not implemented")
 }
 func (UnimplementedFcOrderServer) Check(context.Context, *HealthCheckRequest) (*HealthCheckResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Check not implemented")
@@ -107,6 +122,24 @@ func _FcOrder_CreateAccount_Handler(srv interface{}, ctx context.Context, dec fu
 	return interceptor(ctx, in, info, handler)
 }
 
+func _FcOrder_GetAccountList_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetAccountListRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(FcOrderServer).GetAccountList(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: FcOrder_GetAccountList_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(FcOrderServer).GetAccountList(ctx, req.(*GetAccountListRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _FcOrder_Check_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(HealthCheckRequest)
 	if err := dec(in); err != nil {
@@ -135,6 +168,10 @@ var FcOrder_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "CreateAccount",
 			Handler:    _FcOrder_CreateAccount_Handler,
+		},
+		{
+			MethodName: "GetAccountList",
+			Handler:    _FcOrder_GetAccountList_Handler,
 		},
 		{
 			MethodName: "Check",

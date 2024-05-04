@@ -2,9 +2,9 @@ syntax = "proto3";
 
 package pb;
 
-
 option go_package = "github.com/losuch/fc-order/pb";
 
+import "account.proto";
 
 message CreateAccountRequest {
     string email = 1;
@@ -12,6 +12,8 @@ message CreateAccountRequest {
     string role = 3;
 }
 
-message CreateAccountResponse {
-    string account_id = 1;
+message GetAccountListRequest {}
+
+message GetAccountListResponse {
+    repeated Account accounts = 1;
 }
