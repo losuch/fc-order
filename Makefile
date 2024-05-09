@@ -23,13 +23,13 @@ sqlc:
 	sqlc generate
 
 mock:
-	mockgen -package mockdb -destination db/mock/store.go github.com/fosuch/fc-order/db/sqlc Store
+	mockgen -package mockdb -destination db/mock/store.go github.com/losuch/fc-order/db/sqlc Store
 
 test:
 	go test -v -cover ./...
 
 server:
-	go run cmd/fcorder/main.go
+	go run main.go
 
 proto:
 	rm -f pb/*.go

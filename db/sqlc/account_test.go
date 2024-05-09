@@ -28,6 +28,7 @@ func createRandomAccount(t *testing.T) Account {
     require.NoError(t, err)
     require.NotEmpty(t, account)
     require.Equal(t, arg.Email, account.Email)
+    require.Equal(t, arg.Role, account.Role)
 
     require.NotZero(t, account.AccountID)
     require.NotZero(t, account.CreatedAt)

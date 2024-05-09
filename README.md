@@ -27,6 +27,26 @@ Database schema design: https://dbdiagram.io/
 
 SQLC is a code generation tool for writing SQL queries in Go. It is designed to replace many of the "ORM" style libraries and provide a much simpler and more performant interface to your database of choice. The sqlc.yaml contains the configuration for the sqlc tool.
 
+### MOCKGEN
+
+Mockgen is a tool provided by the golang/mock library. It is used to generate mock implementations of interfaces in Go. Mocking is a technique used in testing to create fake implementations of dependencies, allowing you to isolate the code being tested. The golang/mock library provides a convenient way to generate these mock implementations.
+
+To install mockgen, you can follow these steps:
+
+1. Install the golang/mock library by running the following command:
+   ```
+   $ go get github.com/golang/mock/mockgen
+   ```
+2. Generate a mock implementation by running the following command:
+   ```
+   $ mockgen -source=path/to/interface.go -destination=path/to/mock/implementation.go
+   ```
+   Replace `path/to/interface.go` with the path to the interface you want to mock, and `path/to/mock/implementation.go` with the desired path for the generated mock implementation.
+
+Once you have generated the mock implementation, you can use it in your tests to simulate the behavior of the real implementation. This allows you to test your code in isolation and verify its interactions with the dependencies.
+
+For more information on how to use golang/mock and mockgen, you can refer to the official documentation: https://github.com/golang/mock
+
 ### gRPC
 
 Use the evans tool to interact with the gRPC server.
