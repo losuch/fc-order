@@ -40,6 +40,18 @@ func TestCreateAccount(t *testing.T) {
     account = createRandomAccount(t)
 }
 
+// TestCreateAccount with the same email as the previous account
+func TestCreateAccountSameEmail(t *testing.T) {
+    arg := CreateAccountParams{
+        Email:       account.Email, 
+        HashedPassword:    util.RandomString(10),
+        Role:       "ADMIN",
+    }
+
+    _, err := testQueries.CreateAccount(context.Background(), arg)
+    require.Error(t, err)
+}
+
 // TestGetAccountByEmail is a unit test for the GetAccount function. 
 func TestGetAccountByEmail(t *testing.T) {
     account, err := testQueries.GetAccountByEmail(context.Background(), account.Email)

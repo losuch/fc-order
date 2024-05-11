@@ -1,0 +1,35 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+    xmlns:pro="http://www.liquibase.org/xml/ns/pro"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd
+                        http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibase-pro-4.6.xsd
+                        http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.6.xsd">
+    <changeSet author="losuch" id="lo-7">
+        <createTable tableName="film">
+            <column autoIncrement="true" name="film_id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="film_pk" />
+            </column>
+            <column name="name" type="VARCHAR(255)">
+                <constraints nullable="false" />
+            </column>
+            <column name="type" type="VARCHAR(255)">
+                <constraints nullable="true" />
+            </column>
+            <column name="yt_link" type="VARCHAR(255)">
+                <constraints nullable="true" />
+            </column>
+            <column name="active" type="NUMBER">
+                <constraints nullable="false" />
+            </column>
+            <column name="created_at" type="TIMESTAMP WITHOUT TIME ZONE"
+                defaultValueComputed="CURRENT_TIMESTAMP" />
+        </createTable>
+    </changeSet>
+    <changeSet author="losuch" id="lo-8">
+        <createSequence cacheSize="20" cycle="false" dataType="bigint" incrementBy="1"
+            maxValue="1999999999" minValue="1000000001"
+            sequenceName="film_film_id_seq" startValue="1000000001" />
+    </changeSet>
+</databaseChangeLog>

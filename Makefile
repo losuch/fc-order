@@ -10,6 +10,9 @@ createdb:
 dropdb:
 	docker exec -it fc-pg15 dropdb filip-club
 
+liquibase:
+	liquibase --changeLogFile=db/liquibase/main.changelog.xml --url=jdbc:postgresql://localhost:5432/filip-club --username=root --password=secret update
+
 migrateup:
 	migrate -path db/migration -database "postgresql://root:secret@localhost:5432/filip-club?sslmode=disable" -verbose up
 
@@ -41,4 +44,4 @@ proto:
 evans:
 	evans --host localhost --port 9090 -r repl
 
-.PHONY: network postgres createdb dropdb migrateup migratedown showdb sqlc test server proto evans
+.PHONY: network postgres createdb dropdb migrateup migratedown showdb sqlc test server proto evans liquibase mock

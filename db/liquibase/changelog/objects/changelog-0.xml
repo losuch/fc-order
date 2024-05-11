@@ -1,0 +1,37 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+    xmlns:pro="http://www.liquibase.org/xml/ns/pro"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd
+                        http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibase-pro-4.6.xsd
+                        http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.6.xsd">
+    <changeSet author="losuch" id="lo-1">
+        <createTable tableName="account">
+            <column autoIncrement="true" name="account_id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="account_pk" />
+            </column>
+            <column name="email" type="VARCHAR(255)">
+                <constraints nullable="false" />
+            </column>
+            <column name="hashed_password" type="VARCHAR(255)">
+                <constraints nullable="false" />
+            </column>
+            <column name="role" type="VARCHAR(255)">
+                <constraints nullable="false" />
+            </column>
+            <column name="created_at" type="TIMESTAMP WITHOUT TIME ZONE"
+                defaultValueComputed="CURRENT_TIMESTAMP" />
+        </createTable>
+    </changeSet>
+    <changeSet author="losuch" id="lo-2">
+        <createIndex indexName="account_email_idx1" tableName="account" unique="true">
+            <column name="email" />
+        </createIndex>
+    </changeSet>
+    <changeSet author="losuch" id="lo-3">
+        <createSequence cacheSize="20" cycle="false" dataType="bigint" incrementBy="1"
+            maxValue="1999999999" minValue="1000000001"
+            sequenceName="account_account_id_seq" startValue="1000000001" />
+    </changeSet>
+</databaseChangeLog>

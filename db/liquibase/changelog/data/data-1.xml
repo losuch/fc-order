@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:pro="http://www.liquibase.org/xml/ns/pro"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.6.xsd
+                        http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibase-pro-4.6.xsd
+                        ">
+
+    <changeSet author="losuch" id="lo-7">
+        <!-- password: admin -->
+        <insert dbms="all" schemaName="public" tableName="product">
+            <column name="name" value="Product Test 1" />
+            <column name="description"
+                value="Lorem ipsum dolor sit amet. Aut laborum repellendus eos consectetur sunt est eligendi nostrum ex fuga aspernatur aut libero quod id eius tempore sed molestias veritatis. Qui excepturi reiciendis eum commodi necessitatibus aut modi rerum qui ducimus sunt non dolorem ullam 33 dolores mollitia. In obcaecati rerum aut porro ratione aut iusto numquam non molestiae necessitatibus ut provident sint." />
+            <column name="active" value="1" />
+            <column name="price" value="1000" />
+        </insert>
+        <insert dbms="all" schemaName="public" tableName="product">
+            <column name="name" value="Product Test 2" />
+            <column name="description"
+                value="Lorem ipsum dolor sit amet. Aut laborum repellendus eos consectetur sunt est eligendi nostrum ex fuga aspernatur aut libero quod id eius tempore sed molestias veritatis. Qui excepturi reiciendis eum commodi necessitatibus aut modi rerum qui ducimus sunt non dolorem ullam 33 dolores mollitia. In obcaecati rerum aut porro ratione aut iusto numquam non molestiae necessitatibus ut provident sint." />
+            <column name="active" value="1" />
+            <column name="price" value="1000" />
+        </insert>
+        <insert dbms="all" schemaName="public" tableName="product">
+            <column name="name" value="Product Test 3" />
+            <column name="description"
+                value="Lorem ipsum dolor sit amet. Aut laborum repellendus eos consectetur sunt est eligendi nostrum ex fuga aspernatur aut libero quod id eius tempore sed molestias veritatis. Qui excepturi reiciendis eum commodi necessitatibus aut modi rerum qui ducimus sunt non dolorem ullam 33 dolores mollitia. In obcaecati rerum aut porro ratione aut iusto numquam non molestiae necessitatibus ut provident sint." />
+            <column name="active" value="1" />
+            <column name="price" value="1000" />
+        </insert>
+    </changeSet>
+</databaseChangeLog>

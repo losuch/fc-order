@@ -2,6 +2,7 @@ package api
 
 import (
 	"context"
+	"database/sql"
 	"testing"
 
 	"github.com/golang/mock/gomock"
@@ -55,6 +56,52 @@ func TestCreateAccountAPI(t *testing.T) {
 				require.Equal(t, account.Role, res.Role)
 			},
 		},
+		{
+			name: "InternalError",
+			request: &pb.CreateAccountRequest{
+				Email:    account.Email,
+				Password: account.HashedPassword,
+				Role:     account.Role,
+			},
+			buildStubs: func(store *mockdb.MockStore) {
+				arg := db.CreateAccountParams{
+					Email:          account.Email,
+					HashedPassword: account.HashedPassword,
+					Role:           account.Role,
+				}
+				store.EXPECT().
+					CreateAccount(gomock.Any(), gomock.Eq(arg)).
+					Times(1).
+					Return(db.Account{}, sql.ErrConnDone)
+			},
+			checkResponse: func(t *testing.T, res *pb.Account, err error) {
+				require.Error(t, err)
+				require.Nil(t, res)
+			},
+		},
+		{
+			name: "DuplicateEmail",
+			request: &pb.CreateAccountRequest{
+				Email:    account.Email,
+				Password: account.HashedPassword,
+				Role:     account.Role,
+			},
+			buildStubs: func(store *mockdb.MockStore) {
+				arg := db.CreateAccountParams{
+					Email:          account.Email,
+					HashedPassword: account.HashedPassword,
+					Role:           account.Role,
+				}
+				store.EXPECT().
+					CreateAccount(gomock.Any(), gomock.Eq(arg)).
+					Times(1).
+					Return(db.Account{}, sql.ErrTxDone)
+			},
+			checkResponse: func(t *testing.T, res *pb.Account, err error) {
+				require.Error(t, err)
+				require.Nil(t, res)
+			},
+		},
 	}
 
 	for i := range testCases {
@@ -75,6 +122,101 @@ func TestCreateAccountAPI(t *testing.T) {
 			tc.checkResponse(t, res, err)
 		})
 	}
+}
+
+// TestGetAccountAPI tests the GetAccount function
+func TestGetAccountAPI(t *testing.T) {
+	
+	// create a random account
+	account, _ := randomAccount(t)
+	
+	testCases := []struct {
+		name        string
+		request     *pb.GetAccountRequest
+		buildStubs    func(store *mockdb.MockStore)
+		checkResponse func(t *testing.T, res *pb.Account, err error)
+	}{
+		{
+			name: "OK",
+			request: &pb.GetAccountRequest{
+				Id: 	 account.AccountID,
+			},
+			buildStubs: func(store *mockdb.MockStore) {
+				
+				store.EXPECT().
+					GetAccount(gomock.Any(), gomock.Eq(account.AccountID)).
+					Times(1).
+					Return(db.Account{
+						AccountID:      account.AccountID,
+						Email:          account.Email,
+						HashedPassword: account.HashedPassword,
+						Role:           account.Role,
+					}, nil)
+			},
+			checkResponse: func(t *testing.T, res *pb.Account, err error) {
+				require.NoError(t, err)
+				require.NotNil(t, res)
+				require.NotZero(t, res.AccountId)
+				require.Equal(t, account.AccountID, res.AccountId)
+				require.Equal(t, account.Email, res.Email)
+				require.Equal(t, account.Role, res.Role)
+			},
+		},
+		{
+			name: "InternalError",
+			request: &pb.GetAccountRequest{
+				Id: 	 account.AccountID,
+			},
+			buildStubs: func(store *mockdb.MockStore) {
+				
+				store.EXPECT().
+					GetAccount(gomock.Any(), gomock.Eq(account.AccountID)).
+					Times(1).
+					Return(db.Account{}, sql.ErrConnDone)
+			},
+			checkResponse: func(t *testing.T, res *pb.Account, err error) {
+				require.Error(t, err)
+				require.Nil(t, res)
+			},
+		},
+		{
+			name: "NotFound",
+			request: &pb.GetAccountRequest{
+				Id: 	 account.AccountID,
+			},
+			buildStubs: func(store *mockdb.MockStore) {
+				
+				store.EXPECT().
+					GetAccount(gomock.Any(), gomock.Eq(account.AccountID)).
+					Times(1).
+					Return(db.Account{}, sql.ErrNoRows)
+			},
+			checkResponse: func(t *testing.T, res *pb.Account, err error) {
+				require.Error(t, err)
+				require.Nil(t, res)
+			},
+		},
+	}
+
+	for i := range testCases {
+		tc := testCases[i]
+
+		t.Run(tc.name, func(t *testing.T) {
+			storeCtrl := gomock.NewController(t)
+			defer storeCtrl.Finish()
+			store := mockdb.NewMockStore(storeCtrl)
+
+			taskCtrl := gomock.NewController(t)
+			defer taskCtrl.Finish()
+
+			tc.buildStubs(store)
+			server := newTestServer(t, store)
+
+			res, err := server.GetAccount(context.Background(), tc.request)
+			tc.checkResponse(t, res, err)
+		})
+	}
+
 }
 
 

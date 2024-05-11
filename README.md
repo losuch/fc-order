@@ -23,6 +23,16 @@ https://github.com/golang-migrate/migrate
 
 Database schema design: https://dbdiagram.io/
 
+### Liquibase
+
+The Liquibase is a tool for managing database schema changes. It is an open-source project that provides a simple way to track, version, and deploy database changes. Liquibase uses XML, YAML, or JSON to define the database changes, and it supports a wide range of databases, including MySQL, PostgreSQL, Oracle, and SQL Server. The changes are defined in a changelog file, which is executed by the Liquibase tool to apply the changes to the database.
+
+To run liquibase, you need to follow these steps:
+
+`liquibase --changeLogFile=db/liquibase/main.changelog.xml --url=jdbc:postgresql://localhost:5432/filip-club --username=root --password=secret update`
+
+https://docs.liquibase.com/home.html
+
 ### SQLC
 
 SQLC is a code generation tool for writing SQL queries in Go. It is designed to replace many of the "ORM" style libraries and provide a much simpler and more performant interface to your database of choice. The sqlc.yaml contains the configuration for the sqlc tool.
