@@ -1,0 +1,18 @@
+syntax = "proto3";
+
+package pb;
+
+import "google/protobuf/timestamp.proto";
+
+option go_package = "github.com/losuch/fc-order/pb";
+
+
+message Product {
+    int64 product_id = 1;
+    string name = 2;
+    string description = 3;
+    string images_url = 4;
+    float price = 5;
+    int64 active = 6;
+    google.protobuf.Timestamp created_at = 7;
+}

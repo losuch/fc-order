@@ -19,24 +19,51 @@ import (
 const _ = grpc.SupportPackageIsVersion7
 
 const (
+	FcOrder_Check_FullMethodName          = "/pb.FcOrder/Check"
+	FcOrder_SignIn_FullMethodName         = "/pb.FcOrder/SignIn"
 	FcOrder_CreateAccount_FullMethodName  = "/pb.FcOrder/CreateAccount"
 	FcOrder_GetAccountList_FullMethodName = "/pb.FcOrder/GetAccountList"
 	FcOrder_GetAccount_FullMethodName     = "/pb.FcOrder/GetAccount"
 	FcOrder_UpdateAccount_FullMethodName  = "/pb.FcOrder/UpdateAccount"
 	FcOrder_DeleteAccount_FullMethodName  = "/pb.FcOrder/DeleteAccount"
-	FcOrder_Check_FullMethodName          = "/pb.FcOrder/Check"
+	FcOrder_CreateProduct_FullMethodName  = "/pb.FcOrder/CreateProduct"
+	FcOrder_GetProductList_FullMethodName = "/pb.FcOrder/GetProductList"
+	FcOrder_GetProduct_FullMethodName     = "/pb.FcOrder/GetProduct"
+	FcOrder_UpdateProduct_FullMethodName  = "/pb.FcOrder/UpdateProduct"
+	FcOrder_DeleteProduct_FullMethodName  = "/pb.FcOrder/DeleteProduct"
+	FcOrder_CreateFilm_FullMethodName     = "/pb.FcOrder/CreateFilm"
+	FcOrder_GetFilmList_FullMethodName    = "/pb.FcOrder/GetFilmList"
+	FcOrder_GetFilm_FullMethodName        = "/pb.FcOrder/GetFilm"
+	FcOrder_UpdateFilm_FullMethodName     = "/pb.FcOrder/UpdateFilm"
+	FcOrder_DeleteFilm_FullMethodName     = "/pb.FcOrder/DeleteFilm"
 )
 
 // FcOrderClient is the client API for FcOrder service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type FcOrderClient interface {
+	// HealthCheck
+	Check(ctx context.Context, in *HealthCheckRequest, opts ...grpc.CallOption) (*HealthCheckResponse, error)
+	// SignIn
+	SignIn(ctx context.Context, in *SignInRequest, opts ...grpc.CallOption) (*SignInResponse, error)
+	// Account
 	CreateAccount(ctx context.Context, in *CreateAccountRequest, opts ...grpc.CallOption) (*Account, error)
 	GetAccountList(ctx context.Context, in *GetAccountListRequest, opts ...grpc.CallOption) (*GetAccountListResponse, error)
 	GetAccount(ctx context.Context, in *GetAccountRequest, opts ...grpc.CallOption) (*Account, error)
 	UpdateAccount(ctx context.Context, in *UpdateAccountRequest, opts ...grpc.CallOption) (*Account, error)
 	DeleteAccount(ctx context.Context, in *DeleteAccountRequest, opts ...grpc.CallOption) (*DeleteAccountResponse, error)
-	Check(ctx context.Context, in *HealthCheckRequest, opts ...grpc.CallOption) (*HealthCheckResponse, error)
+	// Product
+	CreateProduct(ctx context.Context, in *CreateProductRequest, opts ...grpc.CallOption) (*Product, error)
+	GetProductList(ctx context.Context, in *GetProductListRequest, opts ...grpc.CallOption) (*GetProductListResponse, error)
+	GetProduct(ctx context.Context, in *GetProductRequest, opts ...grpc.CallOption) (*Product, error)
+	UpdateProduct(ctx context.Context, in *UpdateProductRequest, opts ...grpc.CallOption) (*Product, error)
+	DeleteProduct(ctx context.Context, in *DeleteProductRequest, opts ...grpc.CallOption) (*DeleteProductResponse, error)
+	// Film
+	CreateFilm(ctx context.Context, in *CreateFilmRequest, opts ...grpc.CallOption) (*Film, error)
+	GetFilmList(ctx context.Context, in *GetFilmListRequest, opts ...grpc.CallOption) (*GetFilmListResponse, error)
+	GetFilm(ctx context.Context, in *GetFilmRequest, opts ...grpc.CallOption) (*Film, error)
+	UpdateFilm(ctx context.Context, in *UpdateFilmRequest, opts ...grpc.CallOption) (*Film, error)
+	DeleteFilm(ctx context.Context, in *DeleteFilmRequest, opts ...grpc.CallOption) (*DeleteFilmResponse, error)
 }
 
 type fcOrderClient struct {
@@ -45,6 +72,24 @@ type fcOrderClient struct {
 
 func NewFcOrderClient(cc grpc.ClientConnInterface) FcOrderClient {
 	return &fcOrderClient{cc}
+}
+
+func (c *fcOrderClient) Check(ctx context.Context, in *HealthCheckRequest, opts ...grpc.CallOption) (*HealthCheckResponse, error) {
+	out := new(HealthCheckResponse)
+	err := c.cc.Invoke(ctx, FcOrder_Check_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *fcOrderClient) SignIn(ctx context.Context, in *SignInRequest, opts ...grpc.CallOption) (*SignInResponse, error) {
+	out := new(SignInResponse)
+	err := c.cc.Invoke(ctx, FcOrder_SignIn_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
 }
 
 func (c *fcOrderClient) CreateAccount(ctx context.Context, in *CreateAccountRequest, opts ...grpc.CallOption) (*Account, error) {
@@ -92,9 +137,90 @@ func (c *fcOrderClient) DeleteAccount(ctx context.Context, in *DeleteAccountRequ
 	return out, nil
 }
 
-func (c *fcOrderClient) Check(ctx context.Context, in *HealthCheckRequest, opts ...grpc.CallOption) (*HealthCheckResponse, error) {
-	out := new(HealthCheckResponse)
-	err := c.cc.Invoke(ctx, FcOrder_Check_FullMethodName, in, out, opts...)
+func (c *fcOrderClient) CreateProduct(ctx context.Context, in *CreateProductRequest, opts ...grpc.CallOption) (*Product, error) {
+	out := new(Product)
+	err := c.cc.Invoke(ctx, FcOrder_CreateProduct_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *fcOrderClient) GetProductList(ctx context.Context, in *GetProductListRequest, opts ...grpc.CallOption) (*GetProductListResponse, error) {
+	out := new(GetProductListResponse)
+	err := c.cc.Invoke(ctx, FcOrder_GetProductList_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *fcOrderClient) GetProduct(ctx context.Context, in *GetProductRequest, opts ...grpc.CallOption) (*Product, error) {
+	out := new(Product)
+	err := c.cc.Invoke(ctx, FcOrder_GetProduct_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *fcOrderClient) UpdateProduct(ctx context.Context, in *UpdateProductRequest, opts ...grpc.CallOption) (*Product, error) {
+	out := new(Product)
+	err := c.cc.Invoke(ctx, FcOrder_UpdateProduct_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *fcOrderClient) DeleteProduct(ctx context.Context, in *DeleteProductRequest, opts ...grpc.CallOption) (*DeleteProductResponse, error) {
+	out := new(DeleteProductResponse)
+	err := c.cc.Invoke(ctx, FcOrder_DeleteProduct_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *fcOrderClient) CreateFilm(ctx context.Context, in *CreateFilmRequest, opts ...grpc.CallOption) (*Film, error) {
+	out := new(Film)
+	err := c.cc.Invoke(ctx, FcOrder_CreateFilm_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *fcOrderClient) GetFilmList(ctx context.Context, in *GetFilmListRequest, opts ...grpc.CallOption) (*GetFilmListResponse, error) {
+	out := new(GetFilmListResponse)
+	err := c.cc.Invoke(ctx, FcOrder_GetFilmList_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *fcOrderClient) GetFilm(ctx context.Context, in *GetFilmRequest, opts ...grpc.CallOption) (*Film, error) {
+	out := new(Film)
+	err := c.cc.Invoke(ctx, FcOrder_GetFilm_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *fcOrderClient) UpdateFilm(ctx context.Context, in *UpdateFilmRequest, opts ...grpc.CallOption) (*Film, error) {
+	out := new(Film)
+	err := c.cc.Invoke(ctx, FcOrder_UpdateFilm_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *fcOrderClient) DeleteFilm(ctx context.Context, in *DeleteFilmRequest, opts ...grpc.CallOption) (*DeleteFilmResponse, error) {
+	out := new(DeleteFilmResponse)
+	err := c.cc.Invoke(ctx, FcOrder_DeleteFilm_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -105,12 +231,28 @@ func (c *fcOrderClient) Check(ctx context.Context, in *HealthCheckRequest, opts 
 // All implementations must embed UnimplementedFcOrderServer
 // for forward compatibility
 type FcOrderServer interface {
+	// HealthCheck
+	Check(context.Context, *HealthCheckRequest) (*HealthCheckResponse, error)
+	// SignIn
+	SignIn(context.Context, *SignInRequest) (*SignInResponse, error)
+	// Account
 	CreateAccount(context.Context, *CreateAccountRequest) (*Account, error)
 	GetAccountList(context.Context, *GetAccountListRequest) (*GetAccountListResponse, error)
 	GetAccount(context.Context, *GetAccountRequest) (*Account, error)
 	UpdateAccount(context.Context, *UpdateAccountRequest) (*Account, error)
 	DeleteAccount(context.Context, *DeleteAccountRequest) (*DeleteAccountResponse, error)
-	Check(context.Context, *HealthCheckRequest) (*HealthCheckResponse, error)
+	// Product
+	CreateProduct(context.Context, *CreateProductRequest) (*Product, error)
+	GetProductList(context.Context, *GetProductListRequest) (*GetProductListResponse, error)
+	GetProduct(context.Context, *GetProductRequest) (*Product, error)
+	UpdateProduct(context.Context, *UpdateProductRequest) (*Product, error)
+	DeleteProduct(context.Context, *DeleteProductRequest) (*DeleteProductResponse, error)
+	// Film
+	CreateFilm(context.Context, *CreateFilmRequest) (*Film, error)
+	GetFilmList(context.Context, *GetFilmListRequest) (*GetFilmListResponse, error)
+	GetFilm(context.Context, *GetFilmRequest) (*Film, error)
+	UpdateFilm(context.Context, *UpdateFilmRequest) (*Film, error)
+	DeleteFilm(context.Context, *DeleteFilmRequest) (*DeleteFilmResponse, error)
 	mustEmbedUnimplementedFcOrderServer()
 }
 
@@ -118,6 +260,12 @@ type FcOrderServer interface {
 type UnimplementedFcOrderServer struct {
 }
 
+func (UnimplementedFcOrderServer) Check(context.Context, *HealthCheckRequest) (*HealthCheckResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Check not implemented")
+}
+func (UnimplementedFcOrderServer) SignIn(context.Context, *SignInRequest) (*SignInResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method SignIn not implemented")
+}
 func (UnimplementedFcOrderServer) CreateAccount(context.Context, *CreateAccountRequest) (*Account, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateAccount not implemented")
 }
@@ -133,8 +281,35 @@ func (UnimplementedFcOrderServer) UpdateAccount(context.Context, *UpdateAccountR
 func (UnimplementedFcOrderServer) DeleteAccount(context.Context, *DeleteAccountRequest) (*DeleteAccountResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteAccount not implemented")
 }
-func (UnimplementedFcOrderServer) Check(context.Context, *HealthCheckRequest) (*HealthCheckResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method Check not implemented")
+func (UnimplementedFcOrderServer) CreateProduct(context.Context, *CreateProductRequest) (*Product, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CreateProduct not implemented")
+}
+func (UnimplementedFcOrderServer) GetProductList(context.Context, *GetProductListRequest) (*GetProductListResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetProductList not implemented")
+}
+func (UnimplementedFcOrderServer) GetProduct(context.Context, *GetProductRequest) (*Product, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetProduct not implemented")
+}
+func (UnimplementedFcOrderServer) UpdateProduct(context.Context, *UpdateProductRequest) (*Product, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateProduct not implemented")
+}
+func (UnimplementedFcOrderServer) DeleteProduct(context.Context, *DeleteProductRequest) (*DeleteProductResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DeleteProduct not implemented")
+}
+func (UnimplementedFcOrderServer) CreateFilm(context.Context, *CreateFilmRequest) (*Film, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CreateFilm not implemented")
+}
+func (UnimplementedFcOrderServer) GetFilmList(context.Context, *GetFilmListRequest) (*GetFilmListResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetFilmList not implemented")
+}
+func (UnimplementedFcOrderServer) GetFilm(context.Context, *GetFilmRequest) (*Film, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetFilm not implemented")
+}
+func (UnimplementedFcOrderServer) UpdateFilm(context.Context, *UpdateFilmRequest) (*Film, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateFilm not implemented")
+}
+func (UnimplementedFcOrderServer) DeleteFilm(context.Context, *DeleteFilmRequest) (*DeleteFilmResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DeleteFilm not implemented")
 }
 func (UnimplementedFcOrderServer) mustEmbedUnimplementedFcOrderServer() {}
 
@@ -147,6 +322,42 @@ type UnsafeFcOrderServer interface {
 
 func RegisterFcOrderServer(s grpc.ServiceRegistrar, srv FcOrderServer) {
 	s.RegisterService(&FcOrder_ServiceDesc, srv)
+}
+
+func _FcOrder_Check_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(HealthCheckRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(FcOrderServer).Check(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: FcOrder_Check_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(FcOrderServer).Check(ctx, req.(*HealthCheckRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _FcOrder_SignIn_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(SignInRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(FcOrderServer).SignIn(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: FcOrder_SignIn_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(FcOrderServer).SignIn(ctx, req.(*SignInRequest))
+	}
+	return interceptor(ctx, in, info, handler)
 }
 
 func _FcOrder_CreateAccount_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
@@ -239,20 +450,182 @@ func _FcOrder_DeleteAccount_Handler(srv interface{}, ctx context.Context, dec fu
 	return interceptor(ctx, in, info, handler)
 }
 
-func _FcOrder_Check_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(HealthCheckRequest)
+func _FcOrder_CreateProduct_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CreateProductRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(FcOrderServer).Check(ctx, in)
+		return srv.(FcOrderServer).CreateProduct(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: FcOrder_Check_FullMethodName,
+		FullMethod: FcOrder_CreateProduct_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(FcOrderServer).Check(ctx, req.(*HealthCheckRequest))
+		return srv.(FcOrderServer).CreateProduct(ctx, req.(*CreateProductRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _FcOrder_GetProductList_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetProductListRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(FcOrderServer).GetProductList(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: FcOrder_GetProductList_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(FcOrderServer).GetProductList(ctx, req.(*GetProductListRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _FcOrder_GetProduct_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetProductRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(FcOrderServer).GetProduct(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: FcOrder_GetProduct_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(FcOrderServer).GetProduct(ctx, req.(*GetProductRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _FcOrder_UpdateProduct_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UpdateProductRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(FcOrderServer).UpdateProduct(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: FcOrder_UpdateProduct_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(FcOrderServer).UpdateProduct(ctx, req.(*UpdateProductRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _FcOrder_DeleteProduct_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DeleteProductRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(FcOrderServer).DeleteProduct(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: FcOrder_DeleteProduct_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(FcOrderServer).DeleteProduct(ctx, req.(*DeleteProductRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _FcOrder_CreateFilm_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CreateFilmRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(FcOrderServer).CreateFilm(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: FcOrder_CreateFilm_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(FcOrderServer).CreateFilm(ctx, req.(*CreateFilmRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _FcOrder_GetFilmList_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetFilmListRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(FcOrderServer).GetFilmList(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: FcOrder_GetFilmList_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(FcOrderServer).GetFilmList(ctx, req.(*GetFilmListRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _FcOrder_GetFilm_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetFilmRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(FcOrderServer).GetFilm(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: FcOrder_GetFilm_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(FcOrderServer).GetFilm(ctx, req.(*GetFilmRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _FcOrder_UpdateFilm_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UpdateFilmRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(FcOrderServer).UpdateFilm(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: FcOrder_UpdateFilm_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(FcOrderServer).UpdateFilm(ctx, req.(*UpdateFilmRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _FcOrder_DeleteFilm_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DeleteFilmRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(FcOrderServer).DeleteFilm(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: FcOrder_DeleteFilm_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(FcOrderServer).DeleteFilm(ctx, req.(*DeleteFilmRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -264,6 +637,14 @@ var FcOrder_ServiceDesc = grpc.ServiceDesc{
 	ServiceName: "pb.FcOrder",
 	HandlerType: (*FcOrderServer)(nil),
 	Methods: []grpc.MethodDesc{
+		{
+			MethodName: "Check",
+			Handler:    _FcOrder_Check_Handler,
+		},
+		{
+			MethodName: "SignIn",
+			Handler:    _FcOrder_SignIn_Handler,
+		},
 		{
 			MethodName: "CreateAccount",
 			Handler:    _FcOrder_CreateAccount_Handler,
@@ -285,8 +666,44 @@ var FcOrder_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _FcOrder_DeleteAccount_Handler,
 		},
 		{
-			MethodName: "Check",
-			Handler:    _FcOrder_Check_Handler,
+			MethodName: "CreateProduct",
+			Handler:    _FcOrder_CreateProduct_Handler,
+		},
+		{
+			MethodName: "GetProductList",
+			Handler:    _FcOrder_GetProductList_Handler,
+		},
+		{
+			MethodName: "GetProduct",
+			Handler:    _FcOrder_GetProduct_Handler,
+		},
+		{
+			MethodName: "UpdateProduct",
+			Handler:    _FcOrder_UpdateProduct_Handler,
+		},
+		{
+			MethodName: "DeleteProduct",
+			Handler:    _FcOrder_DeleteProduct_Handler,
+		},
+		{
+			MethodName: "CreateFilm",
+			Handler:    _FcOrder_CreateFilm_Handler,
+		},
+		{
+			MethodName: "GetFilmList",
+			Handler:    _FcOrder_GetFilmList_Handler,
+		},
+		{
+			MethodName: "GetFilm",
+			Handler:    _FcOrder_GetFilm_Handler,
+		},
+		{
+			MethodName: "UpdateFilm",
+			Handler:    _FcOrder_UpdateFilm_Handler,
+		},
+		{
+			MethodName: "DeleteFilm",
+			Handler:    _FcOrder_DeleteFilm_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

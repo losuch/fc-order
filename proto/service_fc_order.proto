@@ -2,50 +2,132 @@ syntax = "proto3";
 
 package pb;
 
-import "rpc_account.proto";
 import "rpc_health.proto";
+import "rpc_account.proto";
+import "rpc_product.proto";
+import "rpc_film.proto";
+import "rpc_signin.proto";
+import "product.proto";
+import "film.proto";
 import "account.proto";
 import "google/api/annotations.proto";
 
 option go_package = "github.com/losuch/fc-order/pb";
 
 service FcOrder {
+
+    // HealthCheck
+    rpc Check(HealthCheckRequest) returns (HealthCheckResponse) {
+        option (google.api.http) = {
+            get: "/api/health"
+        };
+    }
+
+    // SignIn
+    rpc SignIn(SignInRequest) returns (SignInResponse) {
+        option (google.api.http) = {
+            post: "/api/v1/signin"
+            body: "*"
+        };
+    }
     
+    // Account
     rpc CreateAccount(CreateAccountRequest) returns (Account) {
         option (google.api.http) = {
-            post: "/api/v1/accounts"
+            post: "/api/admin/v1/accounts"
             body: "*"
         };
     }
 
     rpc GetAccountList(GetAccountListRequest) returns (GetAccountListResponse) {
         option (google.api.http) = {
-            get: "/api/v1/accounts"
+            get: "/api/admin/v1/accounts"
         };
     }
 
     rpc GetAccount(GetAccountRequest) returns (Account) {
         option (google.api.http) = {
-            get: "/api/v1/accounts/{id}"
+            get: "/api/admin/v1/accounts/{id}"
         };
     }
 
     rpc UpdateAccount(UpdateAccountRequest) returns (Account) {
         option (google.api.http) = {
-            put: "/api/v1/accounts/{id}"
+            put: "/api/admin/v1/accounts/{id}"
             body: "*"
         };
     }
 
     rpc DeleteAccount(DeleteAccountRequest) returns (DeleteAccountResponse) {
         option (google.api.http) = {
-            delete: "/api/v1/accounts/{id}"
+            delete: "/api/admin/v1/accounts/{id}"
         };
     }
     
-    rpc Check(HealthCheckRequest) returns (HealthCheckResponse) {
+    // Product
+    rpc CreateProduct(CreateProductRequest) returns (Product) {
         option (google.api.http) = {
-            get: "/health"
+            post: "/api/v1/products"
+            body: "*"
         };
     }
+
+    rpc GetProductList(GetProductListRequest) returns (GetProductListResponse) {
+        option (google.api.http) = {
+            get: "/api/v1/products"
+        };
+    }
+
+    rpc GetProduct(GetProductRequest) returns (Product) {
+        option (google.api.http) = {
+            get: "/api/v1/products/{id}"
+        };
+    }
+
+    rpc UpdateProduct(UpdateProductRequest) returns (Product) {
+        option (google.api.http) = {
+            put: "/api/v1/products/{id}"
+            body: "*"
+        };
+    }
+
+    rpc DeleteProduct(DeleteProductRequest) returns (DeleteProductResponse) {
+        option (google.api.http) = {
+            delete: "/api/v1/products/{id}"
+        };
+    }
+
+    // Film
+    rpc CreateFilm(CreateFilmRequest) returns (Film) {
+        option (google.api.http) = {
+            post: "/api/v1/films"
+            body: "*"
+        };
+    }
+
+    rpc GetFilmList(GetFilmListRequest) returns (GetFilmListResponse) {
+        option (google.api.http) = {
+            get: "/api/v1/films"
+        };
+    }
+
+    rpc GetFilm(GetFilmRequest) returns (Film) {
+        option (google.api.http) = {
+            get: "/api/v1/films/{id}"
+        };
+    }
+
+    rpc UpdateFilm(UpdateFilmRequest) returns (Film) {
+        option (google.api.http) = {
+            put: "/api/v1/films/{id}"
+            body: "*"
+        };
+    }
+
+    rpc DeleteFilm(DeleteFilmRequest) returns (DeleteFilmResponse) {
+        option (google.api.http) = {
+            delete: "/api/v1/films/{id}"
+        };
+    }
+    
 }

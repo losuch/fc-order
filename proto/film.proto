@@ -1,0 +1,17 @@
+syntax = "proto3";
+
+package pb;
+
+import "google/protobuf/timestamp.proto";
+
+option go_package = "github.com/losuch/fc-order/pb";
+
+
+message Film {
+    int64 film_id = 1;
+    string name = 2;
+    string type = 3;
+    string yt_link = 4;
+    int64 active = 5;
+    google.protobuf.Timestamp created_at = 6;
+}

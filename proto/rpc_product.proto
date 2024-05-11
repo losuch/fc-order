@@ -1,0 +1,42 @@
+syntax = "proto3";
+
+package pb;
+
+option go_package = "github.com/losuch/fc-order/pb";
+
+import "product.proto";
+
+message CreateProductRequest {
+    string name = 1;
+    string description = 2;
+    string images_url = 3;
+    float price = 4;
+    int64 active = 5;
+}
+
+message GetProductListRequest {}
+
+message GetProductListResponse {
+    repeated Product products = 1;
+}
+
+message GetProductRequest {
+    int64 id = 1;
+}
+
+message UpdateProductRequest {
+    int64 id = 1;
+    string name = 2;
+    string description = 3;
+    string images_url = 4;
+    float price = 5;
+    int64 active = 6;
+}
+
+message DeleteProductRequest {
+    int64 id = 1;
+}
+
+message DeleteProductResponse {
+    string status = 1;
+}
