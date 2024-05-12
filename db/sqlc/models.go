@@ -15,3 +15,14 @@ type Account struct {
 	Role           string       `json:"role"`
 	CreatedAt      sql.NullTime `json:"created_at"`
 }
+
+type Product struct {
+	ProductID   int64          `json:"product_id"`
+	Name        string         `json:"name"`
+	Description sql.NullString `json:"description"`
+	ImagesUrl   sql.NullString `json:"images_url"`
+	Price       string         `json:"price"`
+	Active      string         `json:"active"`
+	CreatedAt   sql.NullTime   `json:"created_at"`
+	TypeID      int32          `json:"type_id"`
+}
