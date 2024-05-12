@@ -10,15 +10,20 @@ import (
 
 type Querier interface {
 	CreateAccount(ctx context.Context, arg CreateAccountParams) (Account, error)
+	CreateFilm(ctx context.Context, arg CreateFilmParams) (Film, error)
 	CreateProduct(ctx context.Context, arg CreateProductParams) (Product, error)
 	DeleteAccount(ctx context.Context, accountID int64) error
+	DeleteFilm(ctx context.Context, filmID int64) error
 	DeleteProduct(ctx context.Context, productID int64) error
 	GetAccount(ctx context.Context, accountID int64) (Account, error)
 	GetAccountByEmail(ctx context.Context, email string) (Account, error)
 	GetAccountList(ctx context.Context) ([]Account, error)
+	GetFilm(ctx context.Context, filmID int64) (Film, error)
+	GetFilmList(ctx context.Context) ([]Film, error)
 	GetProduct(ctx context.Context, productID int64) (Product, error)
 	GetProductList(ctx context.Context) ([]Product, error)
 	UpdateAccount(ctx context.Context, arg UpdateAccountParams) (Account, error)
+	UpdateFilm(ctx context.Context, arg UpdateFilmParams) (Film, error)
 	UpdateProduct(ctx context.Context, arg UpdateProductParams) (Product, error)
 }
 

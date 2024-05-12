@@ -50,6 +50,21 @@ func (mr *MockStoreMockRecorder) CreateAccount(arg0, arg1 interface{}) *gomock.C
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "CreateAccount", reflect.TypeOf((*MockStore)(nil).CreateAccount), arg0, arg1)
 }
 
+// CreateFilm mocks base method.
+func (m *MockStore) CreateFilm(arg0 context.Context, arg1 db.CreateFilmParams) (db.Film, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "CreateFilm", arg0, arg1)
+	ret0, _ := ret[0].(db.Film)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// CreateFilm indicates an expected call of CreateFilm.
+func (mr *MockStoreMockRecorder) CreateFilm(arg0, arg1 interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "CreateFilm", reflect.TypeOf((*MockStore)(nil).CreateFilm), arg0, arg1)
+}
+
 // CreateProduct mocks base method.
 func (m *MockStore) CreateProduct(arg0 context.Context, arg1 db.CreateProductParams) (db.Product, error) {
 	m.ctrl.T.Helper()
@@ -77,6 +92,20 @@ func (m *MockStore) DeleteAccount(arg0 context.Context, arg1 int64) error {
 func (mr *MockStoreMockRecorder) DeleteAccount(arg0, arg1 interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DeleteAccount", reflect.TypeOf((*MockStore)(nil).DeleteAccount), arg0, arg1)
+}
+
+// DeleteFilm mocks base method.
+func (m *MockStore) DeleteFilm(arg0 context.Context, arg1 int64) error {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "DeleteFilm", arg0, arg1)
+	ret0, _ := ret[0].(error)
+	return ret0
+}
+
+// DeleteFilm indicates an expected call of DeleteFilm.
+func (mr *MockStoreMockRecorder) DeleteFilm(arg0, arg1 interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DeleteFilm", reflect.TypeOf((*MockStore)(nil).DeleteFilm), arg0, arg1)
 }
 
 // DeleteProduct mocks base method.
@@ -138,6 +167,36 @@ func (mr *MockStoreMockRecorder) GetAccountList(arg0 interface{}) *gomock.Call {
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetAccountList", reflect.TypeOf((*MockStore)(nil).GetAccountList), arg0)
 }
 
+// GetFilm mocks base method.
+func (m *MockStore) GetFilm(arg0 context.Context, arg1 int64) (db.Film, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "GetFilm", arg0, arg1)
+	ret0, _ := ret[0].(db.Film)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// GetFilm indicates an expected call of GetFilm.
+func (mr *MockStoreMockRecorder) GetFilm(arg0, arg1 interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetFilm", reflect.TypeOf((*MockStore)(nil).GetFilm), arg0, arg1)
+}
+
+// GetFilmList mocks base method.
+func (m *MockStore) GetFilmList(arg0 context.Context) ([]db.Film, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "GetFilmList", arg0)
+	ret0, _ := ret[0].([]db.Film)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// GetFilmList indicates an expected call of GetFilmList.
+func (mr *MockStoreMockRecorder) GetFilmList(arg0 interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetFilmList", reflect.TypeOf((*MockStore)(nil).GetFilmList), arg0)
+}
+
 // GetProduct mocks base method.
 func (m *MockStore) GetProduct(arg0 context.Context, arg1 int64) (db.Product, error) {
 	m.ctrl.T.Helper()
@@ -196,6 +255,21 @@ func (m *MockStore) UpdateAccountTx(arg0 context.Context, arg1 db.UpdateAccountP
 func (mr *MockStoreMockRecorder) UpdateAccountTx(arg0, arg1 interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "UpdateAccountTx", reflect.TypeOf((*MockStore)(nil).UpdateAccountTx), arg0, arg1)
+}
+
+// UpdateFilm mocks base method.
+func (m *MockStore) UpdateFilm(arg0 context.Context, arg1 db.UpdateFilmParams) (db.Film, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "UpdateFilm", arg0, arg1)
+	ret0, _ := ret[0].(db.Film)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// UpdateFilm indicates an expected call of UpdateFilm.
+func (mr *MockStoreMockRecorder) UpdateFilm(arg0, arg1 interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "UpdateFilm", reflect.TypeOf((*MockStore)(nil).UpdateFilm), arg0, arg1)
 }
 
 // UpdateProduct mocks base method.

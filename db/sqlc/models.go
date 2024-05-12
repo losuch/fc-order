@@ -16,6 +16,15 @@ type Account struct {
 	CreatedAt      sql.NullTime `json:"created_at"`
 }
 
+type Film struct {
+	FilmID    int64          `json:"film_id"`
+	Name      string         `json:"name"`
+	Type      sql.NullString `json:"type"`
+	YtLink    sql.NullString `json:"yt_link"`
+	Active    string         `json:"active"`
+	CreatedAt sql.NullTime   `json:"created_at"`
+}
+
 type Product struct {
 	ProductID   int64          `json:"product_id"`
 	Name        string         `json:"name"`
